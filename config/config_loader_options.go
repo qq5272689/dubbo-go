@@ -44,6 +44,9 @@ func (f *optionFunc) apply() {
 func ConsumerInitOption(confConFile string) LoaderInitOption {
 	return &optionFunc{
 		func() {
+			if consumerConfig != nil {
+				return
+			}
 			if errCon := ConsumerInit(confConFile); errCon != nil {
 				log.Printf("[consumerInit] %#v", errCon)
 				consumerConfig = nil
@@ -62,6 +65,9 @@ func ConsumerInitOption(confConFile string) LoaderInitOption {
 func ProviderInitOption(confProFile string) LoaderInitOption {
 	return &optionFunc{
 		func() {
+			if providerConfig != nil {
+				return
+			}
 			if errPro := ProviderInit(confProFile); errPro != nil {
 				log.Printf("[providerInit] %#v", errPro)
 				providerConfig = nil
